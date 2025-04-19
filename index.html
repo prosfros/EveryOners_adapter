@@ -1,81 +1,38 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Сап бро</title>
   <style>
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: url('https://i.imgur.com/FY2sB8B.gif') no-repeat center center fixed;
-      background-size: cover;
       font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: url('https://i.imgur.com/Nmj9cBK.gif') no-repeat center center fixed;
+      background-size: cover;
       color: white;
       text-align: center;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.4);
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
       z-index: 1;
     }
 
-    .content {
-      z-index: 2;
-      position: relative;
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      animation: float 2s ease-in-out infinite;
-    }
-
-    p {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    a {
-      padding: 1rem 2rem;
-      background-color: rgba(255, 255, 255, 0.2);
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 10px;
-      transition: background 0.3s;
-      display: inline-block;
-    }
-
-    a:hover {
-      background-color: rgba(255, 255, 255, 0.4);
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0); }
-    }
-
     .lang-switcher {
-      position: absolute;
-      top: 10px;
-      right: 20px;
+      position: fixed;
+      top: 10px; right: 20px;
       z-index: 3;
     }
 
@@ -86,47 +43,151 @@
       background: rgba(255,255,255,0.3);
       color: white;
       font-weight: bold;
-      cursor: pointer;
       border-radius: 5px;
-      transition: background 0.3s;
+      cursor: pointer;
     }
 
-    .lang-switcher button:hover {
-      background: rgba(255,255,255,0.5);
+    .content {
+      position: relative;
+      z-index: 2;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .scroll-hint {
+      animation: float 2s infinite ease-in-out;
+      font-size: 1.2rem;
+      margin-top: 20px;
+    }
+
+    .arrow {
+      font-size: 2rem;
+      animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .memes-section {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 4rem 2rem;
+    }
+
+    .memes-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .memes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .meme {
+      background: #fff;
+      color: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .meme:hover {
+      transform: scale(1.05);
+    }
+
+    .meme img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
   </style>
 </head>
 <body>
   <div class="overlay"></div>
+
   <div class="lang-switcher">
     <button onclick="setLang('ru')">RU</button>
     <button onclick="setLang('en')">EN</button>
   </div>
+
   <div class="content">
-    <h1 id="title">Hi user</h1>
+    <h1 id="title">Привет, юзер</h1>
     <p id="subtitle">Сап бро</p>
-    <a href="https://t.me/EveryOners" target="_blank" id="btn">это просто кнопка для перехода в канал</a>
+    <div class="scroll-hint">
+      <div class="arrow">↓</div>
+      <div id="scroll-text">Листай вниз, там мемы</div>
+    </div>
+  </div>
+
+  <div class="memes-section" id="memes">
+    <h2 id="memes-title">Мемы недели</h2>
+    <div class="memes-grid" id="memes-container">
+      <!-- Мемы подгружаются сюда -->
+    </div>
   </div>
 
   <script>
     const translations = {
       ru: {
-        title: "Hi user",
+        title: "Привет, юзер",
         subtitle: "Сап бро",
-        btn: "это просто кнопка для перехода в канал"
+        scrollText: "Листай вниз, там мемы",
+        memesTitle: "Мемы недели"
       },
       en: {
         title: "Hi user",
         subtitle: "Wassup bro",
-        btn: "just a button to go to the channel"
+        scrollText: "Scroll down for memes",
+        memesTitle: "Memes of the week"
       }
     };
 
     function setLang(lang) {
       document.getElementById("title").textContent = translations[lang].title;
       document.getElementById("subtitle").textContent = translations[lang].subtitle;
-      document.getElementById("btn").textContent = translations[lang].btn;
+      document.getElementById("scroll-text").textContent = translations[lang].scrollText;
+      document.getElementById("memes-title").textContent = translations[lang].memesTitle;
     }
+async function loadMemes() {
+      const container = document.getElementById('memes-container');
+      container.innerHTML = '';
+      try {
+        const res = await fetch('https://meme-api.com/gimme/5');
+        const data = await res.json();
+        data.memes.forEach(meme => {
+          const div = document.createElement('div');
+          div.className = 'meme';
+          div.innerHTML = <img src=\"${meme.url}\" alt=\"meme\">;
+          container.appendChild(div);
+        });
+      } catch (err) {
+        container.innerHTML = '<p>Не удалось загрузить мемы...</p>';
+      }
+    }
+
+    loadMemes();
   </script>
 </body>
 </html>
