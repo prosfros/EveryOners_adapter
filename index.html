@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EveryOners</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fad0c4, #ff9a9e);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    h1 { font-size: 3em; margin: 0.2em; }
+    h2 { font-size: 2em; margin: 0.2em; }
+    .btn {
+      margin-top: 1em;
+      padding: 0.8em 1.5em;
+      font-size: 1em;
+      text-decoration: none;
+      color: #fff;
+      border: 2px solid #fff;
+      border-radius: 2em;
+      transition: background 0.3s, color 0.3s;
+    }
+    .btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+  </style>
+</head>
+<body>
+  <h1>Hi user</h1>
+  <h2>Сап бро</h2>
+  <a href="https://t.me/EveryOners" class="btn" target="_blank" rel="noopener">это просто кнопка для перехода в канал</a>
+</body>
+</html>
